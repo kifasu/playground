@@ -1,4 +1,4 @@
-import React, { LegacyRef, forwardRef } from 'react';
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 import {
@@ -47,8 +47,7 @@ const BUTTON_VARIANT: Record<BUTTON, string> = {
   [BUTTON.reset]: '',
 };
 
-const Button = forwardRef(
-  (props: ButtonComponentProps, ref: LegacyRef<HTMLButtonElement>) => {
+const Button = (props: ButtonComponentProps) => {
     const {
       fill,
       isLoading,
@@ -133,7 +132,6 @@ const Button = forwardRef(
     return (
       <button
         type="button"
-        ref={ref}
         className={variant === BUTTON.reset ? addOn.trim() : newClassname}
         onClick={onClick}
         disabled={isLoading}
@@ -142,8 +140,7 @@ const Button = forwardRef(
         {renderButtonContent()}
       </button>
     );
-  },
-);
+};
 
 Button.defaultProps = {
   fill: false,
