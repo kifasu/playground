@@ -1,4 +1,4 @@
-import React, { LegacyRef, forwardRef } from 'react';
+import React from 'react';
 
 import {
   ALIGN_ITEMS,
@@ -26,8 +26,7 @@ interface FlexComponentProps {
   style?: React.CSSProperties;
 }
 
-const Flex = forwardRef(
-  (props: FlexComponentProps, ref: LegacyRef<HTMLDivElement>): JSX.Element => {
+const Flex = (props: FlexComponentProps): JSX.Element => {
     const {
       id,
       children,
@@ -98,12 +97,11 @@ const Flex = forwardRef(
     ].join(' ');
 
     return (
-      <div id={id} className={newClassname.trim()} style={style} ref={ref}>
+      <div id={id} className={newClassname.trim()} style={style}>
         {children}
       </div>
     );
-  },
-);
+};
 
 export default Flex;
 
