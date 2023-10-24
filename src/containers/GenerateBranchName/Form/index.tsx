@@ -5,6 +5,9 @@ import { JUSTIFY_CONTENT, ROUNDED } from 'entities/tailwind';
 import Button from 'components/Button';
 import Flex from 'components/Flex';
 
+import AgileForm from './Agile';
+import WaterfallForm from './Waterfall';
+
 interface GenerateBranchNameFormProps {
   onChange: (param: string) => void;
 }
@@ -14,33 +17,24 @@ enum WorkflowEnum {
   'Waterfall' = 2,
 }
 
-interface IForm {
-  workflow: WorkflowEnum;
-  branchName: string;
-}
-
 export interface IAgileForm {
-    sprint: number;
-    projectCodeName: string;
-    projectTicketName: string;
-    projectTicketNumber: number;
+  sprint: number;
+  projectCodeName: string;
+  projectTicketName: string;
+  projectTicketNumber: number;
 }
 
 const GenerateBranchNameForm = ({ onChange }: GenerateBranchNameFormProps) => {
-  const [formVal, setFormVal] = useState<IForm>({
-    workflow: WorkflowEnum.Agile,
-    branchName: '',
-  });
-
+  const [currentWorkflow, setCurrentWorkFlow] = useState<WorkflowEnum>(WorkflowEnum.Agile);
 
   const initialAgileFormVal = {
     sprint: 1,
     projectCodeName: '',
     projectTicketName: '',
     projectTicketNumber: 1,
-  }
+  };
 
-  const [agileFormVal, setAgileFormVal] = useState<IAgileForm>(initialAgileFormVal)
+  const [agileFormVal, setAgileFormVal] = useState<IAgileForm>(initialAgileFormVal);
 
   const [waterFallFormVal, setWaterFallFormVal] = useState<string>('');
 
@@ -50,12 +44,21 @@ const GenerateBranchNameForm = ({ onChange }: GenerateBranchNameFormProps) => {
 
   const handleFormReset = () => {
     setAgileFormVal(initialAgileFormVal);
-    setWaterFallFormVal('')
+    setWaterFallFormVal('');
     onChange('');
+  };
+
+  const renderForm = () => {
+    if (currentWorkflow === WorkflowEnum.Agile) {
+      return <AgileForm value={agileFormVal} onChange={setAgileFormVal} />;
+    }
+
+    return <WaterfallForm value={waterFallFormVal} onChange={setWaterFallFormVal} />;
   };
 
   return (
     <div>
+      {renderForm()}
       <Flex justify={JUSTIFY_CONTENT.center}>
         <Button
           label="Reset"
